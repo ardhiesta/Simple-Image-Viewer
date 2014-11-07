@@ -9,49 +9,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 
 public class MainActivity extends ActionBarActivity {
-    private static final int IO_BUFFER_SIZE = 4 * 1024;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//try {
-//    URL url = new URL("http://images.detik.com/content/2014/11/06/10/194814_022933_judionline.jpg");
-//    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//    connection.setDoInput(true);
-//    connection.connect();
-//    InputStream input = connection.getInputStream();
-//    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-//
-//    ImageView imageView = (ImageView) findViewById(R.id.imageView);
-//    imageView.setImageBitmap(myBitmap);
-//}catch(Exception e){
-//    e.printStackTrace();
-//}
-//        try {
-//            ImageView i = (ImageView)findViewById(R.id.imageView);
-////            URL url = new URL("http://images.detik.com/content/2014/11/06/10/194814_022933_judionline.jpg");
-//            Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL("http://images.detik.com/content/2014/11/06/10/194814_022933_judionline.jpg").getContent());
-//            i.setImageBitmap(bitmap);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
-        new DownloadImageTask((ImageView) findViewById(R.id.imageView))
-                .execute("http://images.detik.com/content/2014/11/06/10/194814_022933_judionline.jpg");
+        new DownloadImageTask((ImageView) findViewById(R.id.imageView)).execute("http://images.detik.com/content/2014/11/06/10/194814_022933_judionline.jpg"); //memanggil class DownloadImageTask untuk menampilkan image dari url yang dimasukkan
     }
 
+    //class untuk mendownload image dan menampilkannya ke imageView, menggunakan asynchronous task
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
@@ -76,35 +47,6 @@ public class MainActivity extends ActionBarActivity {
             bmImage.setImageBitmap(result);
         }
     }
-
-//    public static Bitmap loadBitmap(String url) {
-//        Bitmap bitmap = null;
-//        InputStream in = null;
-//        BufferedOutputStream out = null;
-//
-//        try {
-//            in = new BufferedInputStream(new URL(url).openStream(), IO_BUFFER_SIZE);
-//
-//            final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
-//            out = new BufferedOutputStream(dataStream, IO_BUFFER_SIZE);
-//            copy(in, out);
-//            out.flush();
-//
-//            final byte[] data = dataStream.toByteArray();
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            //options.inSampleSize = 1;
-//
-//            bitmap = BitmapFactory.decodeByteArray(data, 0, data.length,options);
-//        } catch (IOException e) {
-//            Log.e(TAG, "Could not load Bitmap from: " + url);
-//        } finally {
-//            closeStream(in);
-//            closeStream(out);
-//        }
-//
-//        return bitmap;
-//    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
